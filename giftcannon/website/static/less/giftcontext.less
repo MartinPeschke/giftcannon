@@ -1,0 +1,71 @@
+
+/* GIFT CONTEXT BAR */
+
+.giftcontext {
+  border: 1px solid #CEC8BC;
+  .border-radius;
+  background-color:white;
+  margin:25px 0 20px 0;
+  padding-left:5%;
+  padding-right:5%;
+
+  h2 {padding: 20px 0 10px;text-align:center;}
+  .line {min-height:100px;padding: 5px 0 10px;margin-bottom:10px;clear:both;position:relative;float:left;width:100%;}
+  .label {
+    margin: 0 0 3px 3px;
+    font-size: 1.2em;
+    color: #999;
+    float:left;
+  }
+  .text {
+    margin-top: 23px;
+    margin-left: 85px;
+  }
+  .backlink {
+    font-size: .8em;
+    display:block;
+    text-decoration: none;
+    clear:both;
+    float:left;
+    margin-right:5px;
+    position:absolute;
+    top: 5px;
+    right:0;
+  }
+  .img-wrap {
+    width: 50px;
+    float: left;
+    height: 50px;.border-radius(10px);
+    .box-shadow( 3px, 3px, 10px, rgba(0,0,0,.2));
+    padding:8px;
+    clear:both;
+  }
+}
+.display-gift-tab .text {margin-top:49px;font-size:1.2em;}
+.display-gift-tab .img-wrap-inner {text-align:center;}
+.display-gift-tab .picture {max-height:100%;}
+.display-recipient-tab .message {color:#222222;padding-top:.6em;margin: 0 5%}
+.display-recipient-tab img {float:left;margin-right:1em;}
+
+.spinner-container {
+  position:relative;
+  float:left;
+  padding-left:35px;
+  padding-right: 5px;
+  height: 50px;
+  .spinner {
+    color:@standard-highlight-color;
+    border: 0px solid transparent;
+    background: none;
+    &:hover{
+      color:white;
+      background-color:@standard-highlight-color;
+      .border-radius();
+    }
+    &:active {
+      color:black;
+    }
+  }
+  .spinner-up {position:absolute; top:-14px;left:0px;}
+  .spinner-down{position:absolute;top:8px;left:0px;}
+}

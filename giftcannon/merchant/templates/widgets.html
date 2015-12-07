@@ -1,0 +1,12 @@
+﻿
+<%def name="menuitem(path_name, label, hierarchical = False)">
+  <%
+    if hierarchical:
+      cmp = lambda x,y: x.startswith(y)
+    else:
+      cmp = lambda x,y: x == y
+  %>
+  <li class="${"active" if cmp(request.matched_route.name, path_name) else ''}">
+    <a href="${request.fwd_url(path_name)}">${label}</a>
+  </li>
+</%def>

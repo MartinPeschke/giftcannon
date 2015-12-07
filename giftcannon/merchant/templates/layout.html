@@ -1,0 +1,67 @@
+﻿    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="nav-collapse">
+            <ul class="nav homelink">
+                ${widgets.menuitem("home", "Public website", True)}
+                ${widgets.menuitem("merchant_support", "Support", True)}
+            </ul>
+            %if not view_context.merchant.isAnon():
+            <ul class="nav pull-right">
+                ${widgets.menuitem("merchant_dashboard", "Dashboard", True)}
+              %if view_context.hasPerm("SETTINGS"):
+                ${widgets.menuitem("merchant_settings", "Settings", True)}
+              %endif
+                ${widgets.menuitem("merchant_logout", "Logout")}
+            </ul>
+            %endif
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container brand-wrapper">
+      <div class="row">
+        <div class="span6">&nbsp;
+          <a href="${request.fwd_url("merchant_dashboard")}" class="logo"><img src="/static/img/logo_l.png"/></a>
+        </div>
+        <div class="span6">
+          %if not view_context.merchant.isAnon():
+            <div class="merchant-name">${view_context.merchant.name}</div>
+          %endif
+        </div>
+      </div>
+    </div>
+    <div class="body-wrapper">
+      <div class="container" id="message-container">
+        <div class="row">
+          %for msg in request.session.pop_flash("generic_messages"):
+            <span class="span12">
+              <div class="alert alert-${msg.type}">
+              <a class="close" data-dismiss="alert">×</a>
+              %if msg.heading:
+                <h4 class="alert-heading">${msg.heading}</h4>
+              %endif
+              ${msg.body}
+              </div>
+            </span>
+          %endfor
+        </div>
+      </div>
+
+      ${next.body()}
+    </div>
+    <footer>
+      <div class="footer-appendix">
+        &copy; GiftCannon 2011-12. All rights reserved
+      </div>
+    </footer>
+
+<%def name="scripts()">${next.scripts()}</%def>
+
+<%inherit file="base.html"/>
+<%namespace name="widgets" file="widgets.html"/>

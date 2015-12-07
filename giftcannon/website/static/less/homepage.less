@@ -1,0 +1,91 @@
+/* HOMEPAGE */
+ul.ticklist {
+  list-style-type:none;
+  li{
+    padding: 8px 35px;font-size:1.7em;line-height: 1.2em;
+    background:url(../img/sprites/bp_tick_orange.png) no-repeat 0 0.2em scroll;
+  }
+  &.small li{font-size: 12px;}
+}
+.banner-row {
+  background: url(../img/home/globe_landmarks.png) no-repeat center 100% scroll;
+  .splash-image{margin: 3% 0 0 5%;max-width:95%;max-height:92%;float:right;}
+  .ticklist{margin: 25px 0 0 0px;}
+
+}
+h1.home-slogan {font-size: 4em; margin-top: 32%;margin-bottom:2%;line-height: 1.1em;margin-left:-25%;}
+div.home-slogan {font-size: 2em; line-height: 1.3em;float:left;font-family:georgia,garamond,serif;letter-spacing: -1px;font-weight:400;margin-left:-25%;}
+h3.home-slogan {font-size: .66em; line-height: 1.2em;text-align: right}
+
+#home{padding-top: 145px;
+    .sparkle-btn {clear:both;margin-top:5%;margin-left:-25%;}
+}
+.homepage{
+  padding-bottom:5px;
+  header{
+    position:fixed;
+    width:100%;
+    z-index:2;
+    top:0px;
+    background-color:@background-color;
+  }
+  footer {position:fixed;bottom:0px;width:100%;z-index:2;}
+
+  .step-container {position:relative;
+    .howitworks-anchor {position:absolute;top:-150px;}
+  }
+  
+
+  > .step-container > .row {margin-bottom:50px;}
+  .container + container {margin-top:200px;}
+  .numbering {
+    background-color: #FFAC2F;
+    padding:0;
+    border-radius: 100%;
+    color: white;
+    top: 0px;
+    margin-top: 3px;
+    position: relative;
+    line-height: 45px;
+    font-size: 4.5em;
+    float:left;
+    display: block;
+    width: 60px;
+    height: 60px;
+    text-indent: 14px;
+  }
+  .title{
+    margin-left: 76px;
+    font-size: 4.5em;
+  }
+}
+
+.howitworks-text {
+  margin-top: 108px;
+}
+.howitworks-pic {
+  float:right;
+  max-width:50%;
+  max-height: 100%;
+  &.left {
+      float: left;
+      margin-right: 5%;
+  }
+}
+.howitworks-pic.left + .howitworks-text{margin-left: 55%;}
+
+
+.howitworks-list {
+  margin-left: 78px;
+  list-style-type: none;
+  margin-top: 17px;
+  font-size: 1.7em;
+  line-height: 1.2em;
+
+  .sparkle-btn {
+    margin-top:40px;
+    font-size:20px;
+    padding:6px 15px;
+    float: left;
+  }
+}

@@ -1,0 +1,35 @@
+﻿
+
+<div class="container-fluid page-container" id="merchant_details">
+  <div class="row-fluid">
+    <div class="span12">
+        <mako:forms:buildform schema="${schemas['merchant']}" values="${values}" errors="${errors}">
+          <mako:def name="header()">Merchant Details</mako:def>
+          <mako:def name="footer()">
+              <button type="submit" class="btn btn-primary">save</button>
+          </mako:def>
+        </mako:forms:buildform>
+
+        <mako:forms:buildform schema="${schemas['bank']}" values="${values}" errors="${errors}">
+          <mako:def name="header()">Bank Details</mako:def>
+          <mako:def name="footer()">
+              <button type="submit" class="btn btn-primary">save</button>
+          </mako:def>
+        </mako:forms:buildform>
+    </div>
+  </div>
+</div>
+
+
+
+<mako:def name="scripts()">
+  <script src="/static/scripts/libs/jquery.validate.min.js"></script>
+  <script>$(function () {var root = $("#merchant_details");${forms.buildValidators("root")}});</script>
+</mako:def>
+
+
+
+
+<mako:inherit file="details_layout.html"/>
+<mako:namespace file="widgets.html" name="widgets"/>
+<mako:namespace name="forms" file="jsonmapper:templates/forms.html"/>

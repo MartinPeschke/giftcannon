@@ -1,0 +1,81 @@
+
+<mako:def name="gift_summary()">
+  <div class="fourcol last" id="gift-summary-view">
+      <div class="giftcontext clearfix">
+        <h2>Summary</h2>
+        <div class="line display-gift-tab data-entity" id="display-gift-tab" data-entity="product">
+          <span class="label">GIFT</span>
+        </div>
+        <div class="seperator"></div>
+        <div class="data-entity line display-recipient-tab" id="display-recipient-tab" data-entity="recipient">
+          <span class="label">FRIEND</span>
+        </div>
+        <div class="seperator"></div>
+        <div class="line display-venue-tab data-entity" id="display-venue-tab" data-entity="venue">
+          <span class="label">VENUE</span>
+        </div>
+
+
+      </div>
+  </div>
+
+  <mako:text filter="n">
+  <script type="text/template" id="giftview-product-template">
+    <div class="floatLeft">
+      <span class="label">GIFT</span>
+      <a href="#product" class="backlink">edit</a>
+      <div class="img-wrap"><div class="img-wrap-inner"><img class="picture" src="<%=picture_url%>" /></div></div>
+    </div>
+    <div class="text">
+      <div class="title"><div id="quantity-spinner" class="spinner-container">
+        <button type="button" class="spinner-up spinner">&#9650;</button>
+        <button class="spinner-down spinner">&#9660;</button>
+        <span class="quantity"><%=quantity%></span> x </div> <%=name%>
+      </div>
+      <% if(prettyprice){ %>
+        <div class="total floatRight"><%=prettyprice%></div>
+      <% } %>
+    </div>
+  </script>
+  <script type="text/template" id="giftview-recipient-template">
+    <div class="floatLeft">
+      <span class="label">FRIEND</span>
+      <a href="#recipient" class="backlink">edit</a>
+      <div class="img-wrap"><div class="img-wrap-inner"><img class="picture" src="<%=picture%>"></div></div>
+    </div>
+    <div class="text">
+      <span class="name"><%=name %></span>
+      <i><span class="email informational"><%=email %></span></i>
+      <% if(message){ %>
+      <span class="message informational"><span class="quote">&#8220;</span><%=message %><span class="quote">&#8221;</span></span>
+      <% } %>
+    </div>
+  </script>
+  <script type="text/template" id="giftview-venue-template">
+    <div class="floatLeft">
+      <span class="label">VENUE</span>
+      <a href="#venue" class="backlink">edit</a>
+      <div class="img-wrap"><div class="img-wrap-inner"><img class="picture" src="<%=picture_url %>" /></div></div>
+    </div>
+    <div class="text">
+      <div class="name"><%=name %></div>
+      <div class="location italics"><%=area %></div>
+      <span class="message informational"><%=description%></span>
+    </div>
+  </script>
+
+
+
+  <script type="text/template" id="giftview-breadcrumb-template">
+      <div id="bcfor-<%=page_id%>" class="crumbcontainer">
+        <div class="breadcumb-arrow">	
+          <div class="left">
+            <a class="crumbslink <%=key %>" _href="#<%=key %>" _for_entity="<%=key %>">
+              <%=number %>. <%=bc_text %>
+            </a>
+          </div>
+        </div>
+      </div>
+  </script>
+  </mako:text>
+</mako:def>

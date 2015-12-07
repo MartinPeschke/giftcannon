@@ -1,0 +1,157 @@
+
+/* ==|== media queries ======================================================
+   PLACEHOLDER Media Queries for Responsive Design.
+   These override the primary ('mobile first') styles
+   Modify as content requires.
+   ========================================================================== */
+
+@media screen and (max-width: 1123px) {
+  .category .category-inner {width:120px; height:120px; padding:10px;}
+  .category.selected .category-inner {
+    width: 160px;
+    height: 160px;
+    margin-top: 30px;
+  }
+}
+
+/* Smaller screens */
+@media screen and (max-width: 1023px) {
+  body {font-size: 0.8em;}
+  .fbFriendList{margin: 5px auto 0;}
+}
+
+@media screen and (max-width: 900px) {
+  .category .category-inner {width:100px; height:100px; padding:10px;}
+  .category.selected .category-inner {
+    width: 140px;
+    height: 140px;
+    margin-top: 30px;
+  }
+
+}
+  
+@media only screen and (min-width: 480px) {
+  /* Style adjustments for viewports 480px and over go here */
+
+}
+
+@media handheld, only screen and (max-width: 767px) {
+  /* Style adjustments for viewports 768px and over go here */
+  body {
+  font-size: 16px;
+  -webkit-text-size-adjust: none;
+  }
+  .row, body, .container {
+  width: 100%;
+  min-width: 0;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  }
+  .row .onecol, .row .twocol, .row .threecol, .row .fourcol, .row .fivecol, .row .sixcol, .row .sevencol, .row .eightcol, .row .ninecol, .row .tencol, .row .elevencol, .row .twelvecol {
+  width: auto;
+  float: none;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  }
+  .main-nav {width: 90%;margin: 2% 5%;padding: 5px 0;}
+  header .logo {max-width:none;}
+  .footer {
+  text-align:center;
+    li {margin: 5px 0;}
+    .link-list {
+      li {padding-right: 0;float:none;}
+      li + li {padding-left:0;border-left:0px solid transparent;}
+    }
+     .privacy {
+        float:none;
+        li {padding-left: 0;float:none;}
+        li + li {padding-right:0;border-right:0px solid transparent;}
+     }
+  }
+
+  .category-carousel {height:auto;
+    .category {float:none;}
+    .carouselPage {position:static;}
+    .category .category-inner {
+      padding: 0;margin:0px auto;
+      float: none;overflow:visible;
+    }
+    .category .title {
+      position: static;
+      top: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+     }
+  }
+
+  #home {padding-top:0;}
+  .homepage {
+    header {position:static;}
+    footer {position:static;}
+    .banner-row .splash-image {margin:0px;max-width: 25%;float:none;}
+    .home-slogan {
+      margin:0px;
+      font-size:3em;
+    }
+    .progress-tracker {display:none;}
+    .numbering{margin-top: 8px;text-indent: 5px;}
+    .title {margin-top: 8px;font-size: 2em;margin-left: 0px;}
+    .step-container {margin-top:50px;padding-top: 0;text-align:center;height: auto;
+    .sparkle-btn {
+      float: none;
+      font-size: 24px;
+      width: 80%;
+      margin: 20px 10%;
+      padding: 10px 0;
+      &.huge{font-size: 32px;}
+      }
+    }
+    .howitworks-list { margin-left: 8px;font-size: 1.2em;}
+    .howitworks-pic {max-width:30%;float:none;}
+  }
+  
+  .banner-row {margin: 0px auto;display: block;}
+  .banner-row .sixcol {padding: 1em 0 1em;}
+  ul.ticklist {margin-top:0 !important;margin-left:4em;font-size:0.8em}
+  .giftstrip .gift-frame {margin-top: 1em; margin-bottom:1em;}
+  .breadcrumbs .crumbcontainer {margin-bottom:10px;float:none;width: 100%;}
+  
+  /* FORMS */
+  .formLine{
+    label {
+      margin:5px 5%;
+      float:none;
+      text-align:left;
+      display:block;
+    }
+    input,select,textarea {width:80%;margin:5px 5%;}
+  }
+
+}
+
+
+
+/* ==|== print styles =======================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+ 
+@media print {
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; } /* Black prints faster: h5bp.com/s */
+  a, a:visited { text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* h5bp.com/t */
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+}

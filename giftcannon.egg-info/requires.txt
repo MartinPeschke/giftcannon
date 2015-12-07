@@ -1,0 +1,11 @@
+pyramid
+pyramid_debugtoolbar
+simplejson
+httplib2
+pyramid_beaker
+beaker
+formencode
+PyDNS
+decorator
+pastescript
+JSONMapperHGMMPFork>=0.22

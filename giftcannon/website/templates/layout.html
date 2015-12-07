@@ -1,0 +1,45 @@
+﻿
+${next.body()}
+
+<%def name="scripts()">
+  ${next.scripts()}
+
+  <script type="text/javascript">
+    // Social Widgets
+    (function () {
+      var socials = [], po, twjs;
+      if (!document.getElementById("plusone-scipt")) {
+        po = document.createElement('script'); po.type = 'text/javascript'; po.id = "plusone-scipt"; po.async = true; po.src = 'https://apis.google.com/js/plusone.js';
+        socials.push(po);
+      }
+      if (!document.getElementById("twitter-wjs")) {
+        twjs = document.createElement('script'); twjs.type = 'text/javascript'; twjs.id = "twitter-wjs"; twjs.async = true; twjs.src = "//platform.twitter.com/widgets.js";
+        socials.push(twjs);
+      }
+      window.__auth__.addFBDeferred(function () {
+        window.setTimeout(function () {
+          FB.XFBML.parse(document.getElementById('social-widgets'));
+          var body = document.getElementsByTagName("body")[0];
+          _.each(socials, function (s) { body.appendChild(s); });
+        }, window.__options__.social_delay);
+      });
+    })();
+  </script>
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    var uvOptions = {};
+    (function() {
+      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+      uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/f0rAejPfwZUoXmjO0PsQQ.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+    })();
+  </script>
+</%def>
+
+<%inherit file="base.html"/>
+
+

@@ -1,0 +1,56 @@
+
+<div id="selectVenue-page" class="page-container venue-selector-page">
+  <div class="fivecol"> 
+    <div class="venue-selector-list">
+      <h2 class="title centered">Find your venue</h2>
+      <div class="venue-list-container" id="venue-list-container"></div>
+    </div>
+  </div>
+  <div class="sevencol last">
+    <div id="location-search-container" class="location-search-container">
+      <input type="text" id="location-search-query" class="last" \
+            placeholder="post code or area"/><span class="icon">clear</span>
+    </div>
+    <div class="mapContainer">
+      <div id="selectVenue-page-map"></div>
+    </div>
+  </div>
+  <a class="btn xlarge orange inactive proceed-btn"></a> 
+</div>
+
+<mako:text filter="n">
+  <script type="text/template" id="friend-template">
+    <li class="listbutton unselectable <%= is_selected?"selected":"" %> <%= is_last?"last":"" %>" data-entity-id="<%=facebook_id%>"  title="<%= name %>">
+      <img style="margin:0.5em;" src="<%= picture %>"/>
+    </li>
+  </script>
+  <script type="text/template" id="list-venue-template">
+    <div class="condensed-vendor venue-entity unselected" id="venue-entity-<%=id%>" data-entity-id="<%=id%>">
+      <div class="mapnumber"><%=pos%></div>
+      <div class="right-box">
+          <a class="btn small orange venue-select">Select</a>
+          <p class="title"><%=name%></p>
+          <span class="location italics"><%=area%></span><a class="showMap"><span>on map</span></a>
+          <p class="desc"><%=description%></p>
+      </div>
+    </div>
+  </script>
+  <script type="text/template" id="infobox-venue-template">
+    <div class="orderForm-vendor-box venue-entity" data-entity-id="<%=id%>">
+      <span class="remover"><span class="icon">close</span></span>
+      <p class="title"><%=name%></p>
+      <div class="left-box">
+        <div class="img-wrap"><div class="img-wrap-inner"><img src="<%=picture_url %>"/></div></div>
+      </div>
+      <div class="right-box">
+          <p class="desc"><%=description%></p>
+          <p class="location italics"><%=line1%>, <%=post_code%></p>
+          <p class="location italics"><%= area %>, <%= city %></p>
+          <% if(url){ %>
+            <p class="location url"><a target="_blank" href="<%=url%>"><%=url%></a></p>
+          <% } %>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </script>
+</mako:text>

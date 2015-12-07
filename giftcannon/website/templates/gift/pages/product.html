@@ -1,0 +1,30 @@
+﻿<div id="selectProduct-page" class="page-container product-selector-page">
+      <div class="catgeories category-carousel carousel clearfix" id="category-box"  tabindex="1">
+        <span class="arrow left">&lsaquo;</span>
+        <span class="arrow right">&rsaquo;</span>
+        <div class="loading carouselPage active-page">
+          <img src="/static/img/sprites/loader.gif" style="width:100%;"/>
+        </div>
+      </div>
+
+  <div id="product-wrapper" class="hidden product-wrapper">
+    <div class="products clearfix" id="product-box">
+    </div>
+    <div class="arrow-up"></div>
+  </div>
+  <a class="btn xlarge orange inactive proceed-btn"></a>
+</div>
+
+<mako:text filter="n">
+  <script type="text/template" id="category-template">
+    <div class="category selectable listbutton  <%= addclasses %>"  data-entity="category" data-entity-id="<%= id %>">
+      <div class="category-inner"><img class="catalogpic" src="<%= picture_url %>" /></div>
+      <p class="title"><%= name %></p>
+    </div>
+  </script>
+  <script type="text/template" id="products-template">
+    <div class="product-inner selectable <%= selected?"selected":"" %>"" data-entity="product" data-entity-id="<%= id %>">
+      <img class="catalogpic" src="<%= picture_url %>" title="<%= name %>" />
+    </div>
+  </script>
+</mako:text>

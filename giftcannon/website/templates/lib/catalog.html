@@ -1,0 +1,15 @@
+<%! import simplejson %>
+
+<mako:def name="render(highlighted_products, with_cols = True)">
+  %for c in highlighted_products:
+    %if with_cols:
+      <div class="threecol ${"last" if c['is_last'] else ""}">
+    %endif
+      <a class="gift-frame tooltipanchor" data-entity="product" data-entity-id="${c['id']}" data="${simplejson.dumps(c)}" href="${request.route_path("gift")}" title="${c['name']}">
+        <img class="shaded-icon" src="${c['picture_url']}"/>
+      </a>
+    %if with_cols:
+      </div>
+    %endif
+  %endfor
+</mako:def>

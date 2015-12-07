@@ -1,0 +1,60 @@
+﻿
+<mako:def name="renderForm(cls)">
+  <h2>Create ${cls.getDisplayName()}</h2><span class="help=inline">* required</span>
+  <form method="POST" action="${request.route_path("admin_entity_create", entity=cls.getEntityName())}" id="submitForm_${cls.__name__}" onsubmit="return false;">
+    %for k,t in cls.getHTMLSpec():
+      <fieldset class="control-group">
+      <input type="${cls.getHTMLInput(k, t)}"  ${cls.getDataTypeAnnotation(k,t)|n}name="${k}" value="${t.default or ""}" placeholder="${k.split(".")[-1].title()}${"*" if t.required else ""}" ${"required" if t.required else ""}>
+      </fieldset>
+    %endfor
+    ${caller.body() if caller else ""}
+    %if merchant:
+      <input type="hidden" value="${merchant.id}" name="${cls.getJSONRoot()}merchant.id">
+    %endif
+    <button type="submit" class="btn">create new ${cls.getDisplayName()}</button>
+  </form>
+</mako:def>
+
+<mako:def name="renderVenueForm(Venue, elem_id)" >
+  <mako:self:renderForm cls="${Venue}">
+      <div id="${elem_id}" class="pictureuploader">
+        <input type="hidden" class="file-target" name="picture"/>
+        <div class="filelist">No runtime found.</div>
+        <a id="${elem_id}-pickfiles" href="#">[Select picture]</a>
+        <a class="uploadfiles" href="#">[Upload]</a>
+      </div>
+  </mako:self:renderForm>
+</mako:def>
+
+<mako:def name="renderDisplay(collection, parent, merchant, editable = True)">
+  %for entity in collection:
+      <table class="table table-bordered table-striped entity" _entity_id="${entity.id}" _merchant_id="${merchant.id}" _entity="${entity.getEntityName()}">
+      <thead>
+        <tr>
+          <th width="10%">key</th>
+          <th>value</th>
+          <th width="120px">
+              <a href="#" _data="${entity.getUpdateJSON(merchant.id)}" class="edit edit-link">edit</a>
+              <a href="#" _data="${entity.getDeleteJSON(merchant.id)}" class="delete-link">delete</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+    %for i, (k,v, required) in enumerate(entity.getAll()):
+      <tr class="entity-attribute">
+        <td>${k.title()}</td>
+        <td>
+          <fieldset class="control-group attribute" _name="${k}" _required="${"true" if required else ""}" _default="${unicode(v).strip()}">${(unicode(v).strip() or "---")}</fieldset></td>
+        %if i==0:
+        <td rowspan="100">
+          %if entity.hasPicture():
+            <div class="picturedisplay">&nbsp;<img src="${entity.getPictureUrl(request)}"/><br/></div>
+          %endif
+        </td>
+        %endif
+      </tr>
+    %endfor
+    </tbody>
+    </table>
+  %endfor
+</mako:def>

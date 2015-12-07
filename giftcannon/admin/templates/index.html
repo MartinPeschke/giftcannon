@@ -1,0 +1,136 @@
+﻿
+<div class="container-fluid page-container">
+  <div class="row-fluid">
+    <div class="span3">
+      ${widgets.renderForm(CreateMerchant)|n}
+      <h3 class="entity">Merchants</h3>
+          
+      <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>no</th>
+          <th>name</th>
+          <th>commission</th>
+          <th style="width: 5%">delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        %for m in merchants:
+          <tr class="entity" id="merchant-entity-${m.id}">
+            <td>${m.id})</td>
+            <td class="attribute" _name="name"><a href="${request.route_path("admin_merchant_details", id = m.id)}">${m.name}</a></td>
+            <td>${m.getCommissionDisplay()}</td>
+            <td style="text-align:right"><a href="#" _entity="${m.getEntityName()}" _data="${m.getDeleteJSON()}" class="delete-link delete">delete</a></td>
+          </tr>
+        %endfor
+      </tbody>
+      </table>
+    </div>
+    <div class="span1">&nbsp;</div>
+     <div class="span8">
+      <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>category</th>
+          <th>products</th>
+        </tr>
+      </thead>
+      <tbody>
+        %for c in categories:
+        <tr>
+          <td class="entity" _entity_id="${c.id}" _entity="${c.getEntityName()}">
+           
+           <fieldset class="control-group attribute" _name="name" _required="true">${c.name}</fieldset>
+           <fieldset class="control-group attribute" _name="sort" _html_type="number" _required="true">${c.sort}</fieldset>
+           <fieldset class="control-group attribute" _name="picture" _required="true" _default="${c.picture}"><img src="${app_globals.getStaticUrl(c.picture)}"></fieldset>
+           <a href="#" _data="${c.getUpdateJSON()}" class="edit-link edit">edit</a>
+           <br /><br />
+           <a href="#" _data="${c.getDeleteJSON()}" class="delete-link delete">delete</a>
+            
+          </td>
+          <td>
+          <form method="POST" action="${request.route_path("admin_entity_create", entity="Product")}" id="create_product_${c.id}" onsubmit="return false;">
+            <table class="table table-striped table-condensed table-bordered">
+            <thead>
+              <tr>
+                <th width="4%">no</th>
+                <th width="30px">curated</th>
+                <th width="25%">name</th>
+                <th>description</th>
+                <th width="120px">picture</th>
+                <th width="5%">edit</th>
+                <th width="5%">delete</th>
+              </tr>
+            </thead>
+            <tbody>
+            %for p in c.product:
+              <tr class="entity" _entity_id="${p.id}" _entity="${p.getEntityName()}">
+                <td>
+                  ${p.id}
+                </td>
+                <td>${p.highlight}
+                <a class="link highlight-product ${"HIGHLIGHTED" if p.highlight else ""}" data-entity="product" data-entity-id="${p.id}">change</a>
+                </td>
+                <td><fieldset class="control-group attribute" _name="name" _required="true">${p.name}</fieldset></td>
+                <td><fieldset class="control-group attribute" _name="description" _required="true">${p.description}</fieldset></td>
+                <td><fieldset class="control-group attribute" _name="picture" _required="true" _default="${p.picture}"><img src="${app_globals.getStaticUrl(p.picture)}" /></fieldset></td>
+                <td><a href="#" _data="${p.getUpdateJSON()}" class="edit-link edit">edit</a></td>
+                <td><a href="#" _data="${p.getDeleteJSON()}" class="delete-link delete">delete</a></td>
+              </tr>
+            %endfor
+              <tr class="entity">
+                <td colspan="2">new
+                  <input type="hidden" name="product.category.id" value="${c.id}">
+                </td>
+                <td><fieldset class="control-group"><input type="text" type="text" placeholder="name" name="product.name" required></fieldset></td>
+                <td><fieldset class="control-group"><input type="text" type="text" placeholder="description" name="product.description" required></fieldset></td>
+                <td><fieldset class="control-group">
+                    <div id="pictureuploader-${c.id}" class="pictureuploader">
+                      <input type="hidden" class="file-target" name="product.picture"/>
+                      <div class="filelist">No runtime found.</div>
+                      <a id="pictureuploader-${c.id}-pickfiles" href="#">[Select picture]</a>
+                      <a class="uploadfiles" href="#">[Upload]</a>
+                    </div>
+                </fieldset></td>
+                <td colspan="2"><input type="submit" value="Create Product" class="btn" /></td>
+              </tr>
+            </tbody>
+            </table>
+            </form>
+          </td>
+        </tr>
+        %endfor
+        <td colspan="2" class="entity">
+          <form method="POST" action="${request.route_path("admin_entity_create", entity="Category")}" id="create_product" onsubmit="return false;">
+          <fieldset class="control-group"><input type="text" type="text" placeholder="name" name="category.name" required></fieldset>
+          <div id="pictureuploader-category" class="pictureuploader">
+                      <input type="hidden" class="file-target" name="category.picture"/>
+                      <div class="filelist">No runtime found.</div>
+                      <a id="pictureuploader-category-pickfiles" href="#">[Select picture]</a>
+                      <a class="uploadfiles" href="#">[Upload]</a>
+                    </div>
+           <input type="submit" value="Create Category" class="btn" />
+           </form>
+        </td>
+
+      </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<mako:def name="scripts()">
+  <script src="/admin/static/scripts/data.js"></script>
+  <script type="text/javascript" src="/admin/static/plupload/js/plupload.full.js"></script>
+  <script type="text/javascript" src="/admin/static/scripts/uploader.js"></script>
+
+  <script>
+    %for c in categories:
+      window.create_uploader("pictureuploader-${c.id}");
+    %endfor
+    window.create_uploader("pictureuploader-category");
+  </script>
+</mako:def>
+<mako:inherit file="base.html"/>
+<mako:namespace file="widgets.html" name="widgets"/>

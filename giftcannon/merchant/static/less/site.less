@@ -1,0 +1,47 @@
+html {background-color: black;}
+.body-wrapper{padding-top: 80px;min-height:400px; /* 60px to make the container go all the way to the bottom of the topbar */}
+.container {position:relative;}
+.navbar .nav.homelink {margin-left: 300px !important;}
+.logo {max-width:285px;}
+
+hr {margin: 30px 0;}
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
+.ir br { display: none; }
+
+.logo {
+  position:absolute;top:-40px; left:0;
+  float:left;display:block;border: none;text-align:center;z-index:1031; font-size:1.2em;
+  h1{background: url(../img/logo_l.png) no-repeat center center; width: 238px; height:127px;}
+}
+.brand-wrapper {margin-top:40px;}
+.merchant-name {color: black;font-size: 4em;line-height: 1em;right: 15px;text-align: right;}
+.footer-appendix {background-color: #000;text-align:center;color:darken(#ccc, 15%);line-height:4em;font-size:0.9em;margin-top:2em;}
+.body-container{min-height:350px;}
+
+.table th, .table td {
+    background: none repeat scroll 0 0 white;
+    color: black;
+    &.price {text-align:right;}
+}
+
+
+tfoot {
+  font-weight:bold;
+}
+
+
+.merchant-coupon .close {
+    border: 3px solid black;
+    border-radius: 30px;
+    color: #000000;
+    padding: 0 3px;
+    position: relative;
+    top: -27px;
+}
+
+
+@media handheld, only screen and (max-width: 767px) {
+  .navbar .nav.homelink {
+    margin-left: 0 !important;
+  }
+}

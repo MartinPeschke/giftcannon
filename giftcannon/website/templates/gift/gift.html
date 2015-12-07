@@ -1,0 +1,56 @@
+<%! import simplejson %>
+
+<div class="container workflow-container">
+  <div class="row">
+    <div class="breadcrumbs clearfix" id="breadcrumbsbar"></div>
+  </div>
+
+  <div class="row">
+    <div id="main" class="eightcol clearfix">
+      <mako:include file="pages/product.html" />
+      <mako:include file="pages/recipient.html" />
+      <mako:include file="pages/venue.html" />
+      <mako:include file="pages/payment.html" />
+    </div>
+    ${widgets.gift_summary()}
+  </div>
+</div>
+
+<mako:def name="styles()"><link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'></mako:def>
+<mako:def name="scripts()">
+  
+  <script src="/static/scripts/libs/jquery.masonry.min.js"></script>
+  <script data-main="/static/scripts/gift" src="/static/scripts/libs/require.js"></script>
+
+
+</mako:def>
+
+<mako:def name="options()">
+  var options = window.__options__;
+  options.social_delay = 1500;
+  options.success_furl = "${request.route_path("payment_success", token="")}";
+  options.payment_types = {
+    'VISA':{cvcDigits:3, numberDigits:4, securityHint:"3 digit code on the back of your credit card", isCreditCard: true, fieldsetId: "creditcard-data"}
+    ,'MC':{cvcDigits:3, numberDigits:4, securityHint:"3 digit code on the back of your credit card", isCreditCard: true, fieldsetId: "creditcard-data"}
+    ,'AMEX':{cvcDigits:4, numberDigits:3, securityHint:"4 digit code on the front of your credit card", isCreditCard: true, fieldsetId: "creditcard-data"}
+    ,'PAYPAL':{disableAllFields: true}
+    ,'VOUCHER':{fieldsetId: "voucher-code-data", maxQty: 1}
+  };
+
+  %if pre_filled:
+    window.__options__.giftview = {
+        preset: ${simplejson.dumps(preset)|n}
+        , reset: true
+    };
+  %else:
+    window.__options__.giftview = {};
+  %endif
+</mako:def>
+
+
+
+
+
+
+<%inherit file="../layout.html"/>
+<%namespace file="../lib/widgets.html" name="widgets"/>

@@ -1,0 +1,72 @@
+﻿<%! import simplejson %>
+<mako:namespace name="forms" file="jsonmapper:templates/forms.html"/>
+
+
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <ul class="nav nav-tabs">
+        ${widgets.menuitem("merchant_settings", "Merchant settings")}
+        ${widgets.menuitem("merchant_settings_operators", "Operators")}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container body-container" id="operator-page">
+  <div class="row">
+    <div class="span12">
+      <table class="table table-striped table-bordered" id="operator-table">
+      <thead><tr>
+        <th>Role</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Delete</th>
+      </tr></thead>
+      <tbody>
+      %for op in view_context.operators:
+      <tr>
+        <td>${op.role}</td>
+        <td>${op.firstName}</td>
+        <td>${op.lastName}</td>
+        <td>${op.email}</td>
+        <td>
+        %if view_context.user.id != op.id:
+        <a class="delete-link" href="#" _name="${op.firstName} ${op.lastName}" \
+              _href="${request.fwd_url("merchant_settings_operator_delete", id=op.id)}">delete</a></td>
+        %endif
+      </tr>
+      %endfor
+      </tbody>
+      </table>
+
+      <mako:forms:buildform schema="${schemas['create']}" values="${values}" errors="${errors}">
+        <mako:def name="header()">Create a new operator</%def>
+        <mako:def name="footer()">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </mako:def>
+      </mako:forms:buildform>
+
+    </div>
+  </div>
+</div>
+
+
+
+<mako:def name="scripts()">
+  <script src="${view_context.static_prefix}/static/scripts/libs/jquery.validate.min.js"></script>
+<script>
+  $(function () {
+    var root = $("#operator-page");
+    root.on({ "click.delete": function (e) {
+      var $target = $(e.target);
+      if(confirm("Delete Operator '"+$target.attr("_name")+"'? Cannot be undone!")){
+        window.location = $target.attr("_href");
+      }}
+    }, ".delete-link");
+    ${forms.buildValidators("root", True)}
+  });
+</script>
+</mako:def>
+<mako:inherit file="../layout.html"/>
+<mako:namespace name="widgets" file="../widgets.html"/>

@@ -1,0 +1,104 @@
+﻿
+${menu.r()}
+
+<div class="container body-container" id="merchant-validate-page">
+  <div class="row">
+    <div class="span12">
+      <div class="merchant-body">
+        <form method="POST" id="validate-form" onsubmit="return false;" class="clearfix">
+          <fieldset class="control-group">
+            <label for="coupon-code">Please enter coupon code here</label>
+            <input id="coupon-code" name="coupon-code" type="text" class="required">
+          </fieldset>
+          <fieldset class="control-group">
+            <input type="submit" class="btn" value="Validate">
+          </fieldset>
+        </form>
+        <hr />
+        <div id="coupon-container" class="merchant-coupon"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%text filter="n">
+<script type="text/template" id="validated-gift-template">
+  <a class="close">×</a>
+
+  <% if (is_valid || newly_redeemed) { %>
+    <% if(newly_redeemed) { %>
+      <div class="alert alert-success" >
+        <strong>Please issue the product.</strong> This coupon has now been redeemed.
+      </div>
+    <% } %>
+      <h3>Coupon</h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%">Status</th>
+            <th style="width: 20%">Code</th>
+            <th>Valid days</th>
+            <th>Redeem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+            <% if (is_valid) { %>
+              <span class="label label-success">VALID</span>
+            <% } else { %>
+              <span class="label label-important">REDEEMED</span>
+            <% } %>
+            </td>
+            <td><%=code%></td>
+            <td><%=-1*expiry %></td>
+            <td>
+              <% if(is_valid) { %>
+                <a class="btn btn-warning js-redeem" _couponCode="<%=code %>"><i class="icon-shopping-cart icon-white"></i> redeem now</a>
+              <% } %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Product</h3>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%">Product</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%=quantity%> x <%=Product.name%></td>
+            <td><%=Product.description%></td>
+          </tr>
+        </tbody>
+      </table>
+  <% } else if (is_redeemed) { %>
+    <div class="alert alert-error" >
+      <strong>Coupon is invalid.</strong> Code has been redeemed.
+    </div>
+  <% } else { %>
+    <div class="alert alert-error" >
+      <strong>Coupon is invalid.</strong> Code has expired.
+    </div>
+  <% } %>
+</script>
+</%text>
+
+<%def name="scripts()">
+  <script src="/static/scripts/libs/Backbone.js"></script>
+  <script>window.__merchant__ = {options : {el : $("#merchant-validate-page")
+                                            , validateUrl : "${request.fwd_url("merchant_code_validate")}"
+                                            , redeemUrl : "${request.fwd_url("merchant_code_redeem")}"
+                                            }
+                                };
+  </script>
+  <script data-main="/merchant/static/scripts/MerchantValidate" src="/merchant/static/scripts/require.js"></script>
+</%def>
+
+<%inherit file="../layout.html"/>
+<%namespace name="menu" file="menu.html"/>
+<%namespace name="widgets" file="../widgets.html"/>

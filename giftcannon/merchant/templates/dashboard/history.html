@@ -1,0 +1,64 @@
+﻿<%! from giftcannon.lib.template_helpers import prettifyPrice %>
+
+
+${menu.r()}
+<div class="container body-container">
+  <div class="row">
+    <div class="span12">
+      %for month, entries in history:
+        <% 
+          grandtotal = 0
+          nettotal = 0
+         %>
+        <h2>${month.strftime("%B %Y")}</h2>
+          <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th style="width: 15%">Product</th>
+              <th style="width: 10%;">Unit Cost</th>
+              <th style="width: 10%;">Total</th>
+              <th style="width: 10%;">Net total</th>
+              <th>Venue</th>
+              <th style="width: 5%">Status</th>
+              <th style="width: 15%">Redeemed</th>
+            </tr>
+          </thead>
+          <tbody>
+            %for gift in entries:
+                <tr>
+                  <td>${gift.getProductNameAndQuantity()}</td>
+                  <td class="price">${prettifyPrice(gift.getItemPrice())|n}</td>
+                  <td class="price">${prettifyPrice(gift.getTotalPrice())|n}</td>
+                  <td class="price">${prettifyPrice(gift.getTotalNetPrice())|n}</td>
+                  <td>${self.showVenue(gift.venue)}</td>
+                  <td><span class="label label-important">${gift.status}</span></td>
+                  <td>${gift.redeemed.strftime("%B %d, %Y<br />%H:%M:%S")|n}</td>
+                </tr>
+                <% 
+                  grandtotal += gift.getTotalPrice()
+                  nettotal += gift.netamount
+                 %>
+            %endfor
+          </tbody>
+          <tfoot>
+              <tr>
+                <td class="price" colspan="2">Total</td>
+                <td class="price">&pound; ${grandtotal}</td>
+                <td class="price">&pound; ${nettotal}</td>
+                <td class="border-closer" colspan="5"></td>
+              </tr>
+          </tfoot>
+        </table>
+      %endfor
+
+    </div>
+  </div>
+</div>
+<%def name="scripts()"></%def>
+<%inherit file="../layout.html"/>
+<%namespace name="menu" file="menu.html"/>
+
+<%def name="showVenue(v)">
+    <strong>${v['name']}</strong>
+    <div>${v['line1']}, ${v['post_code']}, ${v['city']}</div>
+</%def>

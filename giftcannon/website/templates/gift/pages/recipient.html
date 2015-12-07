@@ -1,0 +1,70 @@
+﻿<div id="login-page" class="page-container recipient-selector-page login-page">
+  <div class="workflow-body clearfix">
+    <h2 class="title centered">You need to login to send a gift</h2>
+    <div class="fbloginpanel">
+      <a class="btn_fb_connect fbconnect remove">Connect with facebook</a>
+      <div class="fbexplanation">Facebook will allow you to invite your gift recipient.</div>
+      <div class="fbexplanation">We will never post to facebook without your explicit instruction.</div>
+      <a class="loading hidden">
+        <img src="/static/img/sprites/loader.gif" style="width: 100%;"/>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div id="selectRecipient-page" class="page-container recipient-selector-page">
+  
+  <form id="rcptform" onsubmit="return false;">
+  <div class="workflow-body clearfix">
+    <h2 class="title centered">Choose someone to gift</h2>
+
+    <div class="formLine clearfix">
+      <label for="selectFriend-filter">Friend's name</label>
+      <input autocomplete="off" id="selectFriend-filter" name="name" class="required" \
+          type="text" tabindex="1" placeholder="Find a Facebook friend">
+      <div id="fb-friend-contentslider" class="fbFriendList carousel" tabindex="2">
+        <span class="arrow left">&lsaquo;</span>
+        <span class="arrow right">&rsaquo;</span>
+        <img src="/static/img/sprites/loader.gif" \
+            style="padding-left: 5.5em;padding-top: 30px;"  class="carouselPage active-page"/>
+      </div>
+    </div>
+    <div class="formLine">
+      <label for="selectFriend-email">Friend's email</label>
+      <input id="selectFriend-email" name="email" type="email" class="required" tabindex="3">
+    </div>
+    <div class="formLine">
+      <label for="rcpt-message">Personal message</label>
+      <textarea id="rcpt-message" name="message" class="required" tabindex="4"></textarea>
+    </div>
+    <div class="formLine">
+      <div class="btn-group" data-toggle="buttons-radio" style="margin-left: 25%;">
+          <button type="button" tabindex="6" class="checkbox btn stream-publish">
+              Post to Facebook</button>
+          <button type="button" tabindex="5" class="checkbox btn send-anonymous">
+              Send Anonymous</button>
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn xlarge orange inactive proceed-btn" tabindex="8"></button>
+  </form>
+</div>
+
+<mako:text filter="n">
+  <script type="text/template" id="friend-template">
+    <li class="listbutton <%= addclasses %> <%= is_last?"last":"" %>" data-entity-id="<%=facebook_id%>"  title="<%= name %>">
+      <img class="fbpic" src="<%= picture %>"/>
+    </li>
+  </script>
+  <script type="text/template" id="upcoming-birthdays-template">
+    <li>
+    <% if(bday_is_today) {%>
+      Today is <%= name %>'s birthday
+    <% } else if (bday_is_tomorrow) {%>
+      Tomorrow is <%= name %>'s birthday
+    <% } else { %>
+      Its <%=distance %> <% print(distance>1?"days":"day") %> until <%= name %>'s birthday
+    <% } %>
+    </li>
+  </script>
+</mako:text>

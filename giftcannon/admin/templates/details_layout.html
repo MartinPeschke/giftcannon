@@ -1,0 +1,23 @@
+﻿<mako:inherit file="index.html"/>
+
+
+<mako:block name="header">
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+      <a class="brand" href="${request.route_path("admin_index")}">${merchant.name} - Admin Area</a>
+      <ul class="nav">
+        <li class="${"active" if request.matched_route.name == "admin_index" else ""}">
+          <a href="${request.route_path("admin_index")}">admin home</a>
+        </li>
+        <li class="${"active" if request.matched_route.name == "admin_bank_details" else ""}">
+          <a href="${request.route_path("admin_bank_details", id = merchant.id)}">merchant details</a>
+        </li>
+        <li class="${"active" if request.matched_route.name == "admin_merchant_details" else ""}">
+          <a href="${request.route_path("admin_merchant_details", id = merchant.id)}">products &amp; venues</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</mako:block>

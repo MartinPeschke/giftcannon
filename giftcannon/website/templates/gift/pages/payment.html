@@ -1,0 +1,168 @@
+﻿<div id="payment-page" class="page-container payment-page">
+  <div class="paymentform workflow-body">
+    <h2 class="title centered js-payment-heading"></h2>
+    <form method="POST" id="payment-form" onsubmit="return false;">
+      <div class="creditcard-form highlighted">
+        <div class="legend">
+          <input type="radio" name="use_saved" value="new" class="js-payment-selector" \
+                ${"" if request.user.hasSavedDetails() else "checked"} id="use-saved-false" />
+          <label for="use-saved-false">Enter new details</label>
+          <div style="margin-top:7px;margin-left: 0px;">
+            <input type="checkbox" name="save_details" id="save-details" \
+                    value="true" class="forceDisplayCheckbox" checked/>
+            <label for="save-details">Save card details</label>
+          </div>
+        </div>
+        <fieldset class="money payment-type">
+          <div class="formLine">
+            <label>Method</label>
+            <input type="radio" name="card-type" value="VISA" \
+                    class="payment-type-selector" id="payment-type-selector-visa" checked/>
+            <label for="payment-type-selector-visa"><img style="width: auto;height: auto;" \
+                      src="/static/img/sprites/visa_color.png" title="Visa"/>
+            </label>
+            <input type="radio" name="card-type" value="MC" \
+                    class="payment-type-selector" id="payment-type-selector-mc"/>
+            <label for="payment-type-selector-mc"><img style="width: auto;height: auto;" \
+                      src="/static/img/sprites/mastercard_color.png" title="MasterCard"/>
+            </label>
+            <input type="radio" name="card-type" value="AMEX" \
+                      class="payment-type-selector" id="payment-type-selector-amex"/>
+            <label for="payment-type-selector-amex"><img style="width: auto;height: auto;" \
+                        src="/static/img/sprites/amex_color.png" title="American Express"/>
+            </label>
+            <input type="radio" name="card-type" value="PAYPAL" \
+                      class="payment-type-selector" id="payment-type-selector-paypal"/>
+            <label for="payment-type-selector-paypal"><img style="width: auto;height: auto;" \
+                      src="/static/img/sprites/paypal_color.png" title="Paypal"/>
+            </label>
+              <input type="radio" name="card-type" value="VOUCHER" \
+              class="payment-type-selector" id="payment-type-selector-voucher"/>
+              <label for="payment-type-selector-voucher"><img style="width: auto;height: auto;" \
+                  src="/static/img/sprites/coupon_code.png" title="Voucher"/>
+              </label>
+          </div>
+        </fieldset>
+        <fieldset class="money payment-form" id="creditcard-data">
+          <div class="formLine">
+            <label for="card-holder">Card holder</label>
+            <input class="required card-holder" type="text" id="card-holder" name="card-holder" />
+          </div>
+          <div class="formLine">
+            <label for="card-number1">Card number</label>
+            <input class="cc creditcard_ required digits" type="text" \
+                maxlength="4" max="9999" id="card-number1" name="card-number1"/>
+            <input class="cc creditcard_ required digits" type="text" \
+                maxlength="4" max="9999" id="card-number2" name="card-number2"/>
+            <input class="cc creditcard_ required digits" type="text" \
+                maxlength="4" max="9999" id="card-number3" name="card-number3"/>
+            <input class="cc creditcard_ required digits" type="text" \
+                maxlength="4" max="9999" id="card-number4" name="card-number4"/>
+          </div>
+          <div class="formLine">
+            <label for="expiry-month">Expiration date</label>
+            <select class="expiry month required digits" name="expiry-month" id="expiry-month">
+              %for i in xrange(1,13):
+                <option value="${i}">${str(i).zfill(2)}</option>
+              %endfor
+            </select>
+            <div class="seperator">/</div>
+            <select class="expiry year required digits" name="expiry-year" id="expiry-year">
+              %for i in xrange(2012,2024):
+                <option value="${i}">${i}</option>
+              %endfor
+            </select>
+          </div>
+          <div class="formLine">
+            <label for="security-code">Security code</label>
+            <input class="security required digits" autocomplete="off"\
+                maxlength="3" max="999" type="text" id="security-code" name="security-code"/>
+            <div class="questionmark">
+              <div class="sign">?</div>
+            </div>
+            <span class="hint security-code-hint"></span>
+          </div>
+        </fieldset>
+        <fieldset class="money payment-form hidden" id="voucher-code-data">
+            <div class="formLine voucher-code-input-line">
+                <label for="voucher-code">Voucher code</label>
+                <input class="required voucher max-product-quantity" autocomplete="off" max-quantity="1" type="text" id="voucher-code" name="code" />
+            </div>
+        </fieldset>
+
+
+      </div>
+      %if request.user.hasSavedDetails():
+      <%
+        details = request.user.saved_card_details
+        %>
+      <div class="seperator"></div>
+      <div class="creditcard-form">
+        <div class="legend">
+          <input type="radio" class="js-payment-selector" name="use_saved" \
+              value="old" id="use-saved-true" \
+              ${"checked" if request.user.hasSavedDetails() else ""}/>
+          <label for="use-saved-true">Use these details</label>
+        </div>
+        <fieldset class="money">
+          <div class="formLine">
+            <label for="card-holder">Card number</label>
+            <input type="text" class="readonly cc" disabled readonly \
+                value="${details.getSavedGroupedDetails(0)}">
+            <input type="text" class="readonly cc" disabled readonly \
+                value="${details.getSavedGroupedDetails(1)}">
+            <input type="text" class="readonly cc" disabled readonly \
+                value="${details.getSavedGroupedDetails(2)}">
+            <input type="text" class="readonly cc" disabled readonly \
+                value="${details.getSavedGroupedDetails(3)}">
+            <input type="hidden" id="card-type-used" value="${details.type}">
+          </div>
+          <div class="formLine">
+            <label for="security-code-used">Security code</label>
+            <input class="security required digits" type="text" autocomplete="off"\
+                id="security-code-used" name="security-code-used"/>
+            <div class="questionmark">
+              <div class="sign">?</div>
+            </div>
+            <span class="hint security-code-hint">
+              3 digit code on the back of your credit card
+            </span>
+          </div>
+        </fieldset>
+      </div>
+      %endif
+
+      <input type="submit" id="submit-payment-button" \
+          class="btn orange xlarge pay-now inactive" disabled value="Pay now">
+    </form>
+  </div>
+</div>
+
+<div id="paymentFailed-page" class="page-container payment-failed-page">
+    <div class="workflow-body">
+      <h2 class="title centered">Your payment has been declined</h2>
+      <div class="text">
+        Please check that you entered your details correctly 
+        or choose an alternative payment method.
+      </div>
+    </div>
+    <a href="#send" class="btn xlarge orange proceed-btn floatLeft">&laquo; Try again</a>
+</div>
+
+
+
+<mako:text filter="n">
+  <script type="text/template" id="payment-heading-template">
+    Your card will be charged <%=pretty_price%> for
+      <%=quantity%> x <%=name %>.
+  </script>
+
+  <script type="text/template" id="cvcPopupTemplate">
+    <div class="popup cvcPopup">
+      <h3>Security code</h3>
+      <img src="/static/img/sprites/card.png"/>
+      <p><strong>Visa and Mastercard</strong> have a three-digit card security code. Always the final group of numbers printed on the back signature panel of the card.</p>
+      <p><strong>American Express</strong> cards have a four-digit code printed on the front side of the card above the number. It is printed flat, not embossed like the card number.</p>
+    </div>
+  </script>
+</mako:text>

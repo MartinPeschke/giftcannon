@@ -1,0 +1,100 @@
+<div id="homepage" class="homepage">
+
+  <div class="container step-container" id="home">
+    <div class="row banner-row">
+      <div class="sixcol splash-col">
+        <img class="splash-image" src="/static/img/home/phone.png" />
+      </div>
+      <div class="sixcol last">
+        <h1 class="home-slogan">Anyone, <em>anywhere,</em> any reason</h1>
+        <div class="home-slogan">Sending small gifts is now quick and easy.
+        <h3 class="home-slogan">(and even anonymous)!</h3>
+        </div>
+        <a class="sparkle-btn pulsating huge" href="${request.route_path("gift")}">Send a gift now!</a>
+      </div>
+    </div>
+  </div>
+  <div class="container step-container">
+    <div class="howitworks-anchor" id="step1"></div>
+    <div class="row">
+      <div class="twelvecol">
+        <img class="howitworks-pic" src="/static/img/home/HIW_illustration_step1.png" />
+        <div class="howitworks-text">
+          <h1 class="numbering">1</h1>
+          <h1 class="title">
+            Pick a gift and a lucky friend
+          </h1>
+          <ul class="howitworks-list">
+          <li>Don't forget to write a tender message too.</li>
+          <li><a class="sparkle-btn pulsating" href="${request.route_path("gift")}">Send a gift now!</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container step-container">
+  <div class="howitworks-anchor" id="step2"></div>
+    <div class="row">
+      <div class="twelvecol">
+        <img class="howitworks-pic left" src="/static/img/home/HIW_illustration_step2.png" />
+        <div class="howitworks-text">
+          <h1 class="numbering">2</h1>
+          <h1 class="title">
+            Choose a venue local to your friend
+          </h1>
+          <ul class="howitworks-list">
+          <li>Usually somewhere convenient to their home or office.</li>
+          <li><a class="sparkle-btn pulsating" href="${request.route_path("gift")}">Send a gift now!</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container step-container">
+  <div class="howitworks-anchor" id="step3"></div>
+    <div class="row">
+      <div class="twelvecol">
+        <img class="howitworks-pic" src="/static/img/home/HIW_illustration_step3.png" />
+        <div class="howitworks-text">
+          <h1 class="numbering">3</h1>
+          <h1 class="title">
+            Pay and send
+          </h1>
+          <ul class="howitworks-list">
+          <li>Send a gift via email or facebook (or anonymously).</li>
+          <li><a class="sparkle-btn pulsating" href="${request.route_path("gift")}">Send a gift now!</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container step-container">
+  <div class="howitworks-anchor" id="step4"></div>
+    <div class="row">
+      <div class="twelvecol">
+        <img class="howitworks-pic left" src="/static/img/home/HIW_illustration_step4.png" />
+        <div class="howitworks-text">
+          <h1 class="numbering">4</h1>
+          <h1 class="title">
+            Friend picks up gift in-store
+          </h1>
+          <ul class="howitworks-list">
+          <li>Show code to staff in-store to redeem gift.</li>
+          <li><a class="sparkle-btn pulsating" href="${request.route_path("gift")}">Send a gift now!</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</div>
+<mako:def name="scripts()">
+  <script data-main="/static/scripts/index" src="/static/scripts/libs/require.js"></script>
+</mako:def>
+<mako:def name="bodyclass()">homepage</mako:def>
+<mako:inherit file="layout.html"/>
+<mako:namespace file="lib/catalog.html" name="cataloglib"/>

@@ -1,0 +1,159 @@
+﻿
+<div class="container workflow-container" id="MyGifts-page">
+  <div class="row tab-container" id="MyGifts-navbar">
+    <div class="twelvecol">
+    <a href="#received" class="tab received" _target="MyGifts-received">Received gifts</a>
+    <a href="#sent" class="tab sent" _target="MyGifts-sent">Sent gifts</a>
+    </div>
+  </div>
+
+  <div class="row" id="MyGifts-received">
+    <div class="clearfix tab-body">
+      ${self.wrapReceived(rcvd_gifts_new, is_history = False, if_empty_msg = "Sorry, no currently active gifts!")}
+      %if len(rcvd_gifts_history):
+        <h1>History</h1>
+        ${self.wrapReceived(rcvd_gifts_history, is_history = True, if_empty_msg = "Sorry, no gifts received yet!")}
+      %endif
+    </div>
+  </div>
+  <div class="row" id="MyGifts-sent">
+    <div class="clearfix tab-body">
+      ${self.wrapSent(sent_gifts_new, is_history = False, if_empty_msg = "Sorry, no currently active gifts!")}
+      %if len(sent_gifts_history):
+        <h1>History</h1>
+        ${self.wrapSent(sent_gifts_history, is_history = True, if_empty_msg = "Sorry, no gifts sent yet!")}
+      %endif
+    </div>
+  </div>
+</div>
+<div class="hidden">
+
+  <div class="popup mapsPopup" id="popup-with-map">
+    <div class="mapPopup">
+      <div class="close-btn">×</div>
+      <div id="directions_page_map"></div>
+    </div>
+  </div>
+</div>
+
+<% me = request.user.id %>
+
+<mako:def name="wrapReceived(giftlist, is_history, if_empty_msg)">
+  %if len(giftlist) == 0:
+    <h2>${if_empty_msg}</h2>
+  %else:
+    <div>
+      <div class="compact-gift-header">
+        <div class="twocol"><div class="head">Gift</div></div>
+        <div class="threecol"><div class="head">Venue</div></div>
+        <div class="twocol"><div class="head">From</div></div>
+        <div class="threecol last"><div class="head">Message</div></div>
+      </div>
+      %for gift in giftlist:
+        <div class="compact-gift-row rcvd">
+            %if gift.isOpen() :
+              <span class="status-label NEW">NEW</span>
+            %elif gift.isIssued():
+              <span class="status-label OPEN">VIEWED</span>
+            %else:
+              <span class="status-label REDEEMED">REDEEMED</span>
+            %endif
+            %if not is_history and gift.showExpiry():
+              <span class="expiry-label NEW">expires in ${gift.expiresIn()}</span>
+            %endif
+            <span class="twocol">
+              <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.product.picture.getPath(request)}"/></span></span>
+              <span class="name">${gift.getProductNameAndQuantity()}</span>
+            </span>
+            <span class="threecol">
+              <a class="link showOnMapLink showMap"\
+                  data-longitude="${gift.venue.longitude}" \
+                  data-latitude="${gift.venue.latitude}"><span>on map</span></a>
+              <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.venue.picture.getPath(request)}"/></span></span>
+              <span class="name">${gift.venue.name}</span>
+              <span class="name">${gift.venue.area}, ${gift.venue.post_code}</span>
+            </span>
+            <span class="twocol">
+              <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.getSenderPicture(request)}"/></span></span>
+              <span class="name">${gift.getSenderDisplayName()}</span>
+        
+            </span>
+            <span class="threecol">
+              <span class="name"><span class="message"><span class="quote">&#8220;</span>${gift.message}<span class="quote">&#8221;</span></span></span>
+            </span>
+            <span class="twocol last">
+            <span class="action-link">
+              <a class="sparkle-btn" href="${request.route_path("gift_coupon", token = gift.token)}">
+                  ${"view" if gift.isRedeemed() or gift.isExpired() else "Get coupon"}
+              </a>
+              </span>
+            </span>
+        </div>
+      %endfor
+    </div>
+  %endif
+</mako:def>
+
+<mako:def name="wrapSent(giftlist, is_history, if_empty_msg)">
+  %if len(giftlist) == 0:
+    <h2>${if_empty_msg}</h2>
+  %else:
+    <div>
+    <div class="compact-gift-header">
+      <div class="twocol"><div class="head">Sent to</div></div>
+      <div class="twocol"><div class="head">Gift</div></div>
+      <div class="threecol"><div class="head">Venue</div></div>
+      <div class="threecol last"><div class="head">Message</div></div>
+    </div>
+    %for gift in giftlist:
+      <div class="compact-gift-row status sent">
+          %if gift.isRedeemed():
+          <span class="status-label REDEEMED">REDEEMED</span>
+          %else:
+            <span class="status-label NEW">Unredeemed</span>
+          %endif
+          %if not is_history and gift.showExpiry():
+            <span class="expiry-label NEW">expires in ${gift.expiresIn()}</span>
+          %endif
+
+        <span class="twocol">
+          <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.recipient.picture.getPath(request)}"/></span></span>
+          <span class="name">${gift.recipient.name}</span>
+        </span>
+        <span class="twocol">
+          <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.product.picture.getPath(request)}"/></span></span>
+          <span class="name">${gift.getProductNameAndQuantity()}</span>
+        </span>
+        <span class="threecol">
+          <a class="link showOnMapLink showMap"\
+              data-longitude="${gift.venue.longitude}" \
+              data-latitude="${gift.venue.latitude}"><span>on map</span></a>
+          
+          
+          <span class="img-wrap"><span class="img-wrap-inner"><img src="${gift.venue.picture.getPath(request)}"/></span></span>
+            <span class="name">${gift.venue.name}</span>
+            <span class="name">${gift.venue.area}, ${gift.venue.post_code}</span>
+            
+        </span>
+        <span class="threecol">
+          <span class="name"><span class="message"><span class="quote">&#8220;</span>${gift.message}<span class="quote">&#8221;</span></span></span>
+        </span>
+        <span class="twocol last">
+          <span class="action-link">
+            <a class="sparkle-btn" href="${request.route_path("gift_coupon", token = gift.token)}">
+              view
+            </a>
+          </span>
+        </span>
+      
+      </div>
+    %endfor
+    </div>
+  %endif
+</mako:def>
+
+<mako:inherit file="../layout.html"/>
+<mako:namespace file="../lib/widgets.html" name="widgets"/>
+<mako:def name="scripts()">
+  <script data-main="/static/scripts/gift_mygifts" src="/static/scripts/libs/require.js"></script>
+</mako:def>

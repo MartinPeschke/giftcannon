@@ -1,0 +1,203 @@
+﻿
+<div class="container workflow-container">
+  %if is_payment_success:
+  <div class="row">
+    <div class="twelvecol">
+      <div class="workflow-body success-message">
+        <div class="content">
+           <h3 class="title">Payment successful</h3>
+           Your gift has been sent! ${gift.recipient.name} will be happy to receive it!
+        </div>
+      </div>
+    </div>
+  </div>
+  %endif
+
+
+  <div class="row">
+    <div id="main" class="eightcol clearfix">
+      <div class="giftcoupon-body">
+        <div class="content">
+          <div class="gift-title">
+            <h1 class="product">${gift.getProductNameAndQuantity()}</h1>
+            <div class="product-description">${gift.product.description}</div>
+          </div>
+          <div class="formLine">
+            <div class="onecol">From</div>
+            <div class="fivecol">
+              <div class="img-wrap floatLeft">
+                <div class="img-wrap-inner">
+                  <img src="${gift.getSenderPicture(request)}"/></div></div>
+              <span class="name">${gift.getSenderDisplayName()}</span>
+            </div>
+            <div class="onecol">For</div>
+            <div class="fivecol last">
+              <div class="img-wrap floatLeft">
+                <div class="img-wrap-inner">
+                  <img src="${gift.recipient.picture.getPath(request)}"/></div></div>
+              <span class="name">${gift.recipient.name}</span>
+            </div>
+          </div>
+          <div class="clear"></div>
+          
+          <div class="sixcol">
+            <div class="message">${gift.message}</div>
+          </div>
+          <div class="sixcol last">
+            <div id="display-thankyou-area" \
+                class="message ${gift.hasThankYou() and " " or "hidden"}">
+              ${gift.thankyou}
+            </div>
+          </div>
+
+          %if gift.isForMe(request.user) and not gift.thankyou:
+            <div class="clear"></div>
+            <div id="send-thankyou-area" class="thankyouarea clearfix">
+              <h2 class="title centered">Send a quick thank you to ${gift.sender.name}</h2>
+              <div class="send-thankyou">
+                <div class="formLine">
+                  <textarea id="thankyou-message"></textarea>
+                  <textarea id="gift-json" class="hidden">${gift.toJSON()|n}</textarea>
+                </div>
+                <div class="formLine" id="publish-options">
+                  <input type="button" class="btn orange xlarge thank-btn" value="Send">
+                  <label class="checkbox-label">Publish to Facebook</label>
+                  <div class="checkbox unchecked"></div>
+                </div>
+              </div>
+            </div>
+          %endif
+
+
+          <div class="clear"></div>
+
+        </div>
+
+        <div id="coupon-code-area" \
+          class="coupon ${"active" if gift.isValidForMe(request.user) else "inactive" }" >
+          <div class="coupon-code">
+          %if not request.user.isAnon():
+            %if gift.isFromMe(request.user):
+              %if gift.isOpen():
+                <span class="code-text">${gift.recipient.name} has not yet picked up the gift!</span>
+              %elif gift.isIssued():
+                <span class="code-text">${gift.recipient.name} has been issued the code!</span>
+              %elif gift.isRedeemed():
+                <span class="code-text">${gift.recipient.name} has redeemed the gift!</span>
+              %endif
+            %elif gift.isForMe(request.user):
+              %if gift.isRedeemed():
+                You have redeemed this gift!<br /> 
+                <a href="${request.route_path("gift")}" class="code-text">
+                    Send a small gift to a friend in 3 clicks!</a>
+              %elif gift.isExpired():
+                This gift has expired!<br /> 
+                <a href="${request.route_path("gift")}" class="code-text">
+                    Send a small gift to a friend in 3 clicks!</a>
+              %else:
+                <span class="code-text hideable">Loading Code...</span>
+                <span class="code-text success hidden">Your coupon code is</span>
+                <div class="code-text code"></div>
+                <div class="loading" id="code-text-loader" _gift_id="${gift.id}" _user_token="${request.user.user_token}"><img src="/static/img/sprites/loader.gif" ></div>
+                <div class="success hidden">
+                    Give this code to ${gift.venue.name} to collect your gift</div>
+                <div class="success hidden">
+                    Keep it safe until redeemed</div>
+              %endif
+            %else:
+              This is  ${gift.recipient.name}'s coupon!<br /> 
+              <a href="${request.route_path("gift")}" class="code-text">
+                  Send a small gift to a friend in 3 clicks!</a>
+            %endif
+          %else:
+              <span class="code-text">Is this your gift? Login now:</span>
+                  <a class="fbconnect fbbutton link">
+                      <img src="/static/img/sprites/facebook_connect.gif" /></a>
+          %endif
+          </div>
+          <div class="clear"></div>
+        </div>
+      
+        <div class="seperator"></div>
+        <div class="conditions clearfix">
+
+            <div class="orderForm-vendor-box venue-entity">
+              <p class="title">${gift.venue.name}</p>
+              <div class="left-box">
+                <div class="img-wrap"><div class="img-wrap-inner"><img src="${gift.venue.picture.getPath(request)}"/></div></div>
+              </div>
+              <div class="right-box">
+                  <p class="desc">${gift.venue.description}</p>
+                  <p class="location italics">${gift.venue.line1}, ${gift.venue.post_code}</p>
+                  <p class="location italics">${gift.venue.area}, ${gift.venue.city}</p>
+                  %if gift.venue.url:
+                    <p class="location url"><a target="_blank" href="${gift.venue.url}">${gift.venue.url}</a></p>
+                  %endif
+              </div>
+              <div class="clear"></div>
+            </div>
+
+          <div class="terms">
+            <h3>Terms and conditions</h3>
+            <p class="small-print">Expiry Date: ${gift.expiresOn()}</p>
+            <p class="small-print">Only valid for the specific product(s) and service(s) as shown. Only available for redemption in-store at the participating merchant's location(s) as shown.</p>
+            
+            <p class="small-print">Please click to view our full <a href="/content/en/terms">Terms of service</a> and <a href="/content/en/privacy">Privacy policy</a>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fourcol last">
+      <div class="giftcoupon-context hidden">
+        <form action="${request.route_path("preset_recipient")}" method="POST" id="upcoming-birthdays" class="js-birthdaylist-widget birthdaylist-widget">
+            <h2>Upcoming birthdays!</h2>
+            <textarea name="rcpt" class="hidden"></textarea>
+            <ul class="js-birthdaylist birthdaylist clearfix"></ul>
+        </form>
+      </div>
+    </div>
+    <div class="fourcol last">
+      <div class="giftcoupon-context">
+        <div class="suggested-gifts">
+          <a href="${request.route_path("gift")}" class="sparkle-btn">Send another gift</a>
+        </div>
+        <div id="suggested-gifts" class="suggested-gifts">
+          <div class="giftbox">
+            ${cataloglib.render(highlighted_products, with_cols = False)|n}
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</div>
+
+<mako:text filter="n">
+  <script type="text/template" id="upcoming-birthdays-template">
+    <li>
+    <img class="profilepic" src="<%=picture%>"/>
+    <span class="birthday-selector-text">
+    <% if(bday_is_today) {%>
+      Today is <%= name %>'s birthday
+    <% } else if (bday_is_tomorrow) {%>
+      Tomorrow is <%= name %>'s birthday
+    <% } else { %>
+      <%=distance %> <% print(distance>1?"days":"day") %>: Send <%= name %> a gift!
+    <% } %>
+    <a class="js-birthday-selector link floatRight tiny" data-entity="fbfriend" data-entity-id="<%=id %>">Send gift now &raquo;</a>
+    </span>
+    
+    </li>
+  </script>
+</mako:text>
+
+<mako:def name="scripts()">
+  <script data-main="/static/scripts/gift_coupon" src="/static/scripts/libs/require.js"></script>
+</mako:def>
+
+<mako:def name="options()">
+ window.__options__.social_delay = 1500;
+</mako:def>
+
+<%inherit file="../layout.html"/>
+<%namespace file="../lib/widgets.html" name="widgets"/>
+<%namespace file="../lib/catalog.html" name="cataloglib"/>

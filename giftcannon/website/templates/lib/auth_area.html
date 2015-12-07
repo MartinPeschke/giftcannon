@@ -1,0 +1,16 @@
+﻿<li><a href="${request.fwd_url("home")}#step1" class="nav-icon link icon_cog">How it works</a></li>
+%if not request.user.isAnon():
+  <li>
+      <img class="profilepic-mini" src="${request.user.picture.getPath(request)}"/><span>${request.user.name}</span>
+  </li>
+  <li>
+    <a href="${request.fwd_url("me_gifts")}" class="link nav">My gifts</a>
+  </li>
+  <li>
+    <a class="link nav fbconnect logout" href="${request.fwd_url("logout")}">Logout</a>
+  </li>
+%else:
+  <li>
+      <a class="fbconnect fbbutton link"><img src="/static/img/sprites/facebook_connect.gif" /></a>
+  </li>
+%endif

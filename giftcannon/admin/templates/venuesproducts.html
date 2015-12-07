@@ -1,0 +1,139 @@
+﻿
+
+<div class="container-fluid page-container">
+  <div class="row-fluid">
+    <div class="span7">
+      <div class="row-fluid">
+        <div class="entity-edit span4">
+          ${widgets.renderVenueForm(Venue, "venuepicture")|n}
+        </div>
+        <div class="span8" id="map-root" style="height: 300px;overflow: hidden;padding: 1em 0;position: relative;"></div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+        <h3 class="entity">Venues</h3>
+          ${widgets.renderDisplay(md.venue, Venue, merchant)|n}
+        </div>
+      </div>
+    </div>
+    <div class="span5">
+      
+      
+      <table class="table table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <th width="5%">available</th>
+          <th width="10%">price</th>
+          <th width="20%">category</th>
+          <th width="20%">name</th>
+          <th>description</th>
+          <th>picture</th>
+          <th>assign</th>
+        </tr>
+      </thead>
+      <tbody>
+      %for c in categories:
+        %for p in c.product:
+          %if md.containsProduct(p):
+            ${self.renderProductRow(md, c, p, True)}
+          %endif
+        %endfor
+      %endfor
+      %for c in categories:
+        %for p in c.product:
+          %if not md.containsProduct(p):
+            ${self.renderProductRow(md, c, p, False)}
+          %endif
+        %endfor
+      %endfor
+      </tbody>
+      </table>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<form method="POST" action="${request.route_path("admin_entity_update", entity="Product")}" id="assign_product_${merchant.id}" onsubmit="return false;">
+<div class="modal" id="product-assign-modal" style="display:none">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Assign Product to Venue</h3>
+  </div>
+  <div class="modal-body">
+    <fieldset>
+      <div class="control-group">
+        <input type="text" id="merchantproduct-product-price" value="" \
+               name="query.merchantproduct.product.price" class="required number"\
+               data-type="baseunits" required placeholder="price"/>
+      </div>
+      <input type="hidden" name="query.merchantproduct.merchant.id" id="merchantproduct-merchant-id" value="${merchant.id}" />
+      <input type="hidden" name="query.merchantproduct.product.id" id="merchantproduct-product-id" value="" />
+      <input type="hidden" name="url" id="url" value="/merchant/admin/unassignproduct" />
+      <div class="btn-group" data-toggle="buttons-radio">
+        <a autocomplete="off" class="btn toggleaction assigned" _query_url="/merchant/admin/assignproduct">Assigned</a>
+        <a autocomplete="off" class="btn active toggleaction unassigned" _query_url="/merchant/admin/unassignproduct">Not Assigned</a>
+      </div>
+    </fieldset>
+  </div>
+  <div class="modal-footer">
+    <input type="submit" class="btn btn-primary" value="Save changes">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+  </div>
+</div>
+</form>
+
+<mako:def name="renderProductRow(md, c, p, assigned)">
+  <tr class="entity">
+    <td class="attribute assigned">${"yes" if assigned else ""}</td>
+    <td class="attribute price">${md.getProductPrice(p)}</td>
+    <td>${c.name}</td>
+    <td>${p.name}</td>
+    <td>${p.description}</td>
+    <td><img src="${app_globals.getStaticUrl(p.picture)}" style="width:30px;" /></td>
+    <td><a href="#" class="assign-product" _entity_id="${p.id}" >${"unassign" if assigned else "assign"}</a></td>
+  </tr>
+</mako:def>
+
+<mako:def name="scripts()">
+  <script src="/admin/static/scripts/data.js"></script>
+  <script src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+  <script type="text/javascript" src="/admin/static/plupload/js/plupload.full.js"></script>
+  <script type="text/javascript" src="/admin/static/scripts/map.js"></script>
+  <script type="text/javascript" src="/admin/static/scripts/uploader.js"></script>
+  <script>
+    window.create_map(window.__options__.maps.key);
+    window.create_uploader("venuepicture");
+    $(function () {
+      var modal = $('#product-assign-modal');
+      $(".toggleaction").click(function (e) {
+        $("#url").val($(e.target).attr("_query_url"));
+      });
+
+      $("body").delegate(".assign-product", "click", function (e) {
+        var target = $(e.target), entity = target.closest(".entity"), price = entity.find(".attribute.price").text(), enabled = entity.find(".attribute.assigned").text().trim() == 'yes';
+        if (enabled) {
+          var btn = modal.find(".toggleaction.assigned");
+          modal.find("#url").val(btn.attr("_query_url"));
+          modal.find("#merchantproduct-product-price").attr("disabled", "disabled");
+          btn.button('toggle');
+        } else {
+          var btn = modal.find(".toggleaction.unassigned");
+          modal.find("#url").val(btn.attr("_query_url"));
+          modal.find("#merchantproduct-product-price").removeAttr("disabled");
+          btn.button('toggle');
+        }
+        modal.find("#merchantproduct-product-price").val(price);
+        modal.find("#merchantproduct-product-id").val(target.attr("_entity_id"));
+        modal.modal('show')
+      });
+    });
+
+  </script>
+</mako:def>
+
+
+
+<mako:inherit file="details_layout.html"/>
+<mako:namespace file="widgets.html" name="widgets"/>
+

@@ -1,0 +1,71 @@
+﻿<%! import simplejson %>
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <ul class="nav nav-tabs">
+        ${widgets.menuitem("merchant_settings", "Merchant settings")}
+        ${widgets.menuitem("merchant_settings_operators", "Operators")}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="container body-container">
+  <div class="row">
+    <div class="span12">
+
+      <form class="form-horizontal">
+        <fieldset class="control-group">
+          <legend>Merchant name</legend>
+          <label class="control-label" >Name</label>
+          <div class="controls">
+          <input disabled type="text" value="${view_context.merchant.name}" class="input-xlarge" />
+          </div>
+        </fieldset>
+      </form>
+
+
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Bank details</legend>
+          <div class="control-group">
+            <label class="control-label">Account holder</label>
+            <div class="controls">
+              <input disabled type="text" class="input-xlarge" value="${view_context.merchant.holder or ""}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Account number</label>
+            <div class="controls">
+              <input disabled type="text" class="input-xlarge" value="${view_context.merchant.accountNumber or ""}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Sort code</label>
+            <div class="controls">
+              <input disabled type="text" class="input-xlarge" value="${view_context.merchant.sortCode or ""}">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Bank name</label>
+            <div class="controls">
+              <input disabled type="text" class="input-xlarge" value="${view_context.merchant.bankName or ""}">
+            </div>
+          </div>
+          <hr />
+           <div class="control-group">
+            <label class="control-label">GiftCannon commission</label>
+            <div class="controls">
+              <input disabled type="text" class="input-xlarge" value="${view_context.merchant.getCommissionDisplay() or ""}">
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<mako:def name="scripts()"></mako:def>
+<mako:inherit file="../layout.html"/>
+<mako:namespace name="widgets" file="../widgets.html"/>
