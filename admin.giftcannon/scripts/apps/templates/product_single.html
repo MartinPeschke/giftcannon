@@ -1,0 +1,7 @@
+<div class="control-group">
+    <label class="checkbox">
+        <input type="checkbox" name="Product-{{ idx }}.sold" value="true" {{ product.get('sold')?'checked="checked"':'' }}/>
+        <input type="hidden" name="Product-{{ idx }}.id" value="{{ product.get('id') }}" />
+        {{ product.get("name") }} ({{ product.getPrice() }})
+    </label>
+</div>

@@ -1,0 +1,11 @@
+<div class="smaller headline" xmlns="http://www.w3.org/1999/html">Congratulations, You've been sent this Gift:</div>
+<div class="ornamented-gift">
+    <img class="picture" src="{{ product.getPictureUrl() }}"/>
+</div>
+{% if(message){ %}
+<blockquote>
+    {{ message }}
+</blockquote>
+{% } %}
+<h1 class="font" style="padding:0;">1x {{ product.get("name") }}</h1>
+<a class="btn btn-primary link highlighted" href="/gift/code/{{ token }}">Claim My Gift</a>

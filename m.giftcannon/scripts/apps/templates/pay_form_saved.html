@@ -1,0 +1,19 @@
+<form class="form-validated form-compacted" method="post">
+    <fieldset>
+        <div class="legend pay-by">Please pay for your gift below by entering your card details. On receipt of payment your gift code will be displayed on the next page ready for gifting.</div>
+        <div class="control-group first">
+            <span class="control-label">{{ details.number }}</span>
+        </div>
+        <div class="control-group with-help">
+            <div class="context-help cvc">?</div><input type="tel" name="cvs" placeholder="CVC" max="999" required maxlength="4" minlength="3" tabindex="5"/>
+        </div>
+        <div class="legend security-statement">Fully secure payment <script type="text/javascript" src="https://seal.thawte.com/getthawteseal?host_name=m.giftcannon.com&amp;size=M&amp;lang=en"></script><img src="/imgs/cards.png"/></div>
+        <div class="legend">Receipt will be sent to:</div>
+        <div class="control-group with-help email last"><div class="context-help email">?</div><input type="email" name="Gift.User.email" placeholder="Your email address" id="cardholder-email" required tabindex="6"/></div>
+    </fieldset>
+    <div class="btn-group">
+        <button type="button" class="btn btn-info btn-discard btn-multiline" tabindex="8">Discard<br/>card details</button>
+        <button type="submit" class="btn btn-primary" data-loading="Loading..." tabindex="7">Pay</button>
+    </div>
+    <p class="smaller">Gifts have no expiry date.</p>
+</form>

@@ -1,0 +1,23 @@
+<div class="page-header">
+    <a class="btn btn-primary btn-back link" href="/gift/coupon/{{ token }}">Back</a>
+    <h1 class="page-title">GiftCannon</h1>
+</div>
+<div class="page-body gift-code-page narrow">
+    <h4 class="smaller headline">Enjoy any {{ product.get("name") }} at any venue below. That’s right simply show your code to redeem your free gift.</h4>
+    <div class="coupon-code">{{ code }}</div>
+
+    <p class="smaller">Don't forget to say thanks! and ...</p>
+    <a class="btn btn-primary link" href="/">Say Thanks With A Gift</a>
+
+    <p class="smaller">You can redeem this gift at any of the following venues.</p>
+    <div class="venue-details">
+        <div class="load-progress relative">
+            <div id="block_1" class="barlittle"></div>
+            <div id="block_2" class="barlittle"></div>
+            <div id="block_3" class="barlittle"></div>
+            <div id="block_4" class="barlittle"></div>
+            <div id="block_5" class="barlittle"></div>
+            <h3>Loading...</h3>
+        </div>
+    </div>
+</div>

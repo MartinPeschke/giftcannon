@@ -1,0 +1,397 @@
+@import "normalize";
+@font-face { font-family: Amatic; src: url('/font/AmaticSC-Regular.ttf'); }
+@font-face { font-family: Amatic-Bold; src: url('/font/AmaticSC-Bold.ttf'); }
+
+.fontAmatic(){
+  font-family: Amatic, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:normal;
+}
+.fontAmaticBold(){
+  font-family: Amatic-Bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:normal;
+}
+
+@headerBackground:#e75004;
+@headerHighlight:#ccc;
+@headerHeight: 56px;
+@headingFontsize: 45px;
+@bodyFontsize: 20px;
+@bodyFontFamily: sans-serif;
+.bodyBackground() {
+  background: url(/imgs/background.png);
+  background: -moz-radial-gradient(top left, ellipse cover, transparent 0%, transparent 26%, rgba(0,0,0,0.4) 100%), url(/imgs/background.png); /* FF3.6+ */
+  background: -webkit-radial-gradient(top left, ellipse cover, transparent 0%,transparent 26%,rgba(0,0,0,0.4) 100%), url(/imgs/background.png); /* Chrome10+,Safari5.1+ */
+  background: -ms-radial-gradient(top left, ellipse cover, transparent 0%,transparent 26%,rgba(0,0,0,0.4) 100%), url(/imgs/background.png); /* IE10+ */
+  background: radial-gradient(ellipse at top left, transparent 0%,transparent 26%,rgba(0,0,0,0.4) 100%), url(/imgs/background.png); /* W3C */
+  text-shadow:1px 1px 1px rgba(0,0,0,.3);
+}
+
+.inputBackground(){
+  border: none;
+  box-shadow: 0 5px 15px 3px rgba(0,0,0,.3) inset;
+  background:white;
+}
+
+@import "mixins";
+@import "form";
+
+@import "scaffold";
+h1,h2,h3,h4 {
+  margin:0;
+  line-height: 1.1em;
+  font-weight:normal;
+  padding-bottom:.5em;
+}
+.font {
+  .fontAmaticBold();
+}
+hr {width:85%;}
+p {margin-bottom: @bodyFontsize/3;}
+.smaller {
+  font-size:.8em;
+  line-height: 1.2em;
+  li {padding: 10px 0;}
+}
+.pronounced, .splash-list.pronounced {
+  border: 1px solid rgba(255, 255, 255, .2);
+  padding: 10px;
+  display:block;
+  margin: 5px -11px;
+  background: rgba(0, 0, 0, .05);
+}
+
+
+a.link, a.external-link {
+  color:white;text-decoration: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  -webkit-user-select: none;
+}
+a.link.active, a.external-link.active {
+  background:rgba(255,255,255,.5);
+}
+.btn-image {
+  background:none;
+  display:block;
+  clear:both;
+  .transition(opacity transform .4s linear);
+  &.link.active {
+    background:none;
+    .opacity(0);
+    .scale(0.1);
+  }
+}
+/*
+.page-body.adorned {
+  padding: 5% 10%;
+  background:url(/imgs/ornament_pay.png) top right no-repeat;
+  background-size: 90% auto;
+}
+*/
+
+/* ========================================= PAGES ========================================= */
+ol {
+  list-style-position: inside;padding: 15px 0 0;margin:0;float:left;width:100%;
+  list-style-type:none;
+  .font {padding:0;}
+  li {line-height:1.3em;}
+  li .sub {font-size: 16px;line-height: 1em;font-family: @bodyFontFamily;font-weight:normal;}
+  li + li {padding-top: 25px;}
+}
+
+.splash-list{
+  list-style-type: none;
+  padding:0;
+  li {
+    list-style-type: none;
+    padding: 10px 0 0;
+    line-height: 1.2em;
+    position: relative;
+    &.bulleted:before {
+      content: "\00BB \0020  ";
+    }
+  }
+}
+.headline + .splash-list {
+  padding-top:0;margin-top:0;
+}
+.body-title {
+  @borderColor: darken(@headerBackground, 15%);
+  border-top: 1px solid @borderColor;
+  background-color: #DF4D06;
+  line-height: 1.1em;
+  padding: 10px;
+}
+
+.home-page{
+  min-height:100%;
+  width:100%;
+  .product-floats {margin-left:-15px;float:left;white-space: nowrap;}
+  .splash-list {margin: 15px 0 0;}
+  .example {
+    padding:0 0 .5em;
+    font-weight: normal;
+    font-size: .5em;
+    line-height: 1em;
+    clear: both;
+    font-style: italic;
+  }
+  q {margin-left:30px;display:block;}
+  .example + .example {margin-left:25px;}
+  .product-picture.inset-one {
+    .rotate(-15deg);
+  }
+  .product-picture.inset-two {
+    .rotate(25deg);
+    margin-left:12px;
+  }
+  .btn-image {width: 80%;margin: 0 10%;}
+}
+.help-body {
+  img {width:50%;margin-bottom: -30px;}
+}
+
+/* ================================ PRODUCT SELECTION PAGE ======================= */
+
+.product-link {
+  position: absolute;
+  display: block;
+  height: 80%;
+  width: 40%;
+  left: 30%;
+  top: 10%;
+  z-index:5;
+  .border-radius(100%);
+}
+
+.product-single {
+  position:relative;
+  display: inline-block;
+  width:50%;
+  margin-top:4px;
+  img {
+    display:block;
+    margin:0px auto;
+    width:100%;
+  }
+  .transition(all .4s linear);
+}
+
+.product-single.active {
+  background:none;
+  .opacity(0);
+  .scale(0.1);
+}
+
+
+.meta {
+  position: relative;
+  display:block;
+  .fontAmaticBold();
+  .name {
+    display: block;
+    font-size: 1.4em;
+    line-height: 1em;
+    .text-overflow();
+  }
+  .underline {
+    width:80%;
+    margin:0px auto;
+    display:block;
+  }
+}
+
+@productDetailsHeight: 2em;
+.product-details {
+  line-height:@productDetailsHeight;
+  .fontAmaticBold();
+  text-align:left;
+  .picture {width:auto;height:3.3em;float:left;margin: -6px -15px 0;}
+  .picture-large {width:80%;}
+  .picture-large + .product-name {line-height: 1em;font-size: 2em;}
+  .product-name, .product-price {font-size:1.4em;line-height: 1em;}
+  .product-card {width: 67%;padding: 15px 0;}
+  .product-any-note {float:right;width: 33%;padding: 15px 0;font-size: 1.3em;line-height: 1em;text-align: right;}
+  &:first-child {margin: 10px 0;}
+}
+
+/* ========================== PAYMENT PAGE ============================= */
+.payment-form {
+  margin-top: 20px;
+}
+.security-statement {
+  border-bottom: 1px solid white;
+  font-size:.7em;
+  line-height: 1.2em;
+}
+
+.ornamented-gift {
+  background:url(/imgs/ornament.png) center center no-repeat;
+  background-size:100% auto;
+  width:60%;
+  padding-bottom:60%;
+  position: relative;
+  margin:  0 20%;
+  .picture {
+    position: absolute;
+    width:100%;
+    top:20%;
+    left:0;
+  }
+}
+
+/* ========================== COUPON DETAILS =========================== */
+.redemption-section {
+  display:block;
+  clear:both;
+  text-align:left;
+  margin-top:15px;
+  font-family:@bodyFontFamily;
+  .label {display:block;line-height: 1.2em;padding:5px 5px 0 0;text-align:center;}
+  .code {
+    display:block;
+    text-align:center;
+    border: 1px solid black;
+    background: white;
+    color: black;
+    text-shadow: 1px 1px 1px white;
+    font-weight: bold;
+    font-family: @bodyFontFamily;
+    font-size: 2em;
+    line-height: 1.5em;
+    padding: 0 10px;
+  }
+  .context-help {display:inline-block;float:right;}
+}
+
+.gift-code-page .headline {margin:  30px;padding: 0;}
+.coupon-code {
+  font-size: 100px;
+  font-family:@bodyFontFamily;
+  line-height: 1.2em;
+  margin: 0 -4% 5%;
+  border: 2px solid black;
+  text-shadow: 1px 1px 1px white;
+  background: white;
+  color:black;
+}
+
+.map-infobox {
+  width: 200px;
+  padding-right:20px;
+  .box-sizing(border-box);
+  .btn-background-primary();
+  font-family: sans-serif;
+  border-radius: 6px;
+  border: 1px solid white;
+  text-shadow: 1px 1px 2px black;
+  font-size: 20px;
+  line-height:30px;
+  text-align: left;
+  text-indent:5px;
+  .text-overflow();
+}
+.link-sign {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 100%;
+  border: 2px solid #555;
+  line-height: 14px;
+  color: black;
+  text-align: center;
+  text-shadow: none;
+  text-indent:0;
+  font-size: 18px;
+  position: absolute;
+  top: 5px;
+  right: 3px;
+}
+
+.venue-details {padding-bottom:15px;margin-left: -2%;}
+.venue-single {
+  background-color:#dd5800;
+  border-bottom: 1px solid #8b0000;
+  border-top: 1px solid black;
+  box-shadow: rgba(0,0,0,.6) 0 1px 5px 1px;
+  text-shadow: 1px 1px 1px black;
+  display:block;
+  position:relative;
+  float: left;
+  text-align:right;
+  &.list-entry {
+    width: 48%;
+    margin: 0 0 10px 2%;
+  }
+  .meta {
+    padding: 3px 2%;
+    .fontAmaticBold();
+  }
+  .venue-name {text-align: center;display:block;line-height:2em;font-size:.7em;.text-overflow();}
+  .meta.venue-address {
+    display: block;
+    text-align: center;
+  }
+  .picture {width:100%;display:block;}
+}
+.venue-picture {
+  display:block;
+  width:100%;
+  overflow:hidden;
+  line-height: 1em;
+  height: auto;
+  .label {
+    text-align: center;
+    font-size: .7em;
+    line-height: 2em;
+    text-decoration: underline;
+    display:block;
+  }
+}
+
+.venue-details-page {
+  h1.venue-name {
+    margin:0;
+  }
+  .venue-single {
+    width:100%;
+    .venue-picture{width:50%;float:left;}
+    .venue-name {font-size:2em;}
+    .meta.venue-address {font-size:1.2em;}
+  }
+}
+
+
+/* ================================= PAYMENT SUCCESS ======================= */
+.meta {
+  line-height: 1.5em;
+  &.url {
+    color:black;
+    margin: 5% -5%;
+    padding: 0 5%;
+    display:block;
+    line-height:2em;
+    font-size: 2.5em;
+    line-height: 1.5em;
+    text-shadiow:none;
+    width: 100%;
+    .text-overflow();
+    .box-sizing(content-box);
+    .inputBackground();
+    &.hover {background: rgba(0, 0, 0, .3);}
+  }
+}
+.gift-coupon-body {
+  .context-help {float:right;margin-left: 15px;}
+}
+.product-picture.inline {
+  height: 2em;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+
+@import "responsive";

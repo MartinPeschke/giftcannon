@@ -1,0 +1,19 @@
+<div class="page-header">
+    <a class="btn btn-primary btn-back history-back link" href="/">Back</a>
+    <h1 class="page-title">GiftCannon</h1>
+</div>
+<div class="page-body venue-details-page">
+    <h1 class="meta venue-name">{{ venue.get("name") }}</h1>
+    <div class="venue-entity venue-single" data-entity-id="{{ venue.get("id") }}">
+        <a href="{{ venue.getURL() }}" class="link external-link venue-picture photo">
+            <span class="label">Website</span>
+            <img class="picture" src="{{ venue.getPicture() }}"/>
+        </a>
+        <a href="{{ venue.getMapLink() }}" class="link external-link venue-picture map">
+            <span class="label">Directions</span>
+            <img  class="picture" src="{{ venue.getRoadMap(320, 240) }}"/>
+        </a>
+        <div class="clear"></div>
+        <span style="display:block;" class="meta venue-address">{{ venue.getAddress() }}</span>
+    </div>
+</div>

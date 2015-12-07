@@ -1,0 +1,9 @@
+<div class="product-single link-anchor">
+    <img src="{{ product.getPictureUrl() }}"/>
+    <span class="meta">
+        <span class="name">{{ product.get("name") }}</span>
+        <img src="/imgs/product_line.png" class="underline"/>
+        <span class="price">{{ product.getPrice() }}</span>
+    </span>
+    <a class="product-link link-anchored link" href="/product/{{ product.get('id') }}">&nbsp;</a>
+</div>

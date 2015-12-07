@@ -1,0 +1,12 @@
+<form class="form-validated form-compacted" method="post">
+    <fieldset>
+        <div class="legend top">Enter promo code</div>
+        <div class="control-group first">
+            <input type="text" name="voucherCode" placeholder="Enter your promo code" required tabindex="1" minlength="6" maxlength="6"/>
+        </div>
+        <div class="legend top">Receipt will be sent to:</div>
+        <div class="control-group with-help email last"><div class="context-help email">?</div><input type="email" name="Gift.User.email" placeholder="Your email address" id="cardholder-email" required tabindex="6"/></div>
+    </fieldset>
+    <button type="submit" class="btn btn-primary" data-loading="Loading..." tabindex="7">Use Promo Code</button>
+    <p class="smaller">Gifts have no expiry date.</p>
+</form>

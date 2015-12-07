@@ -1,0 +1,110 @@
+<div class="page-header">
+    <a href="/venues" class="btn btn-info link">Back</span></a>
+    <h1 class="page-title">Add new Oxford Venue</h1>
+</div>
+<div class="page-body">
+    <form class="form-horizontal form-validated" method="POST" >
+        <fieldset>
+
+            <div class="control-group required">
+                <label class="control-label">venue name</label>
+                <div class="controls">
+                    <input type="text" name="name" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">picture</label>
+                <div class="controls">
+                    <div class="venue-picture-display"></div>
+                    <div class="file-picker-upload" data-default="Drop File Here">Drop File Here</div>
+                    <span class="help-block clear">PNG image 320 x 240px</span>
+                </div>
+            </div>
+
+
+            <div class="control-group required">
+                <label class="control-label">line 1</label>
+                <div class="controls">
+                    <input type="text" name="line1" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">line 2</label>
+                <div class="controls">
+                    <input type="text" name="line2" class="input-large" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">line 3</label>
+                <div class="controls">
+                    <input type="text" name="line3" class="input-large" />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">post code</label>
+                <div class="controls">
+                    <input type="text" name="postCode" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">city</label>
+                <div class="controls">
+                    <input type="text" name="city" class="input-large" value="Oxford" required />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">url</label>
+                <div class="controls">
+                    <input type="text" name="url" class="input-large" />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">latitude</label>
+                <div class="controls">
+                    <input type="text" name="latitude" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">longitude</label>
+                <div class="controls">
+                    <input type="text" name="longitude" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">username</label>
+                <div class="controls">
+                    <input type="text" name="email" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">password</label>
+                <div class="controls">
+                    <input type="text" name="pwd" class="input-large" required />
+                </div>
+            </div>
+
+            <div class="control-group required">
+                <label class="control-label">commission</label>
+                <div class="controls">
+                    <input type="text" name="commission" class="input-large digits" required />
+                </div>
+            </div>
+
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" data-loading="Loading...">Create</button>
+            <a href="/venues" class="btn btn-danger link" data-loading="Loading...">Cancel</a>
+        </div>
+
+    </form>
+</div>

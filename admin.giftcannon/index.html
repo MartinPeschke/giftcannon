@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GiftCannon Admin - Mobile Gifting</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- DEBUG -->
+    <link rel="stylesheet/less" href="/less/site.less">
+    <script src="/scripts/libs/less-1.3.0.js" type="text/javascript"></script>
+    <!-- LIVE
+    <link href="/scripts/apps/css/site.min.css"  media="screen" rel="stylesheet" type="text/css">
+    -->
+</head>
+<body>
+    <div class="message-container hide" id="message-container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="span12" id="root-container">
+                <div class="page-container splash-page active-page afterAnim" id="splash-page" data-page-index="00">
+                    <div class="page-header">
+                        <img class="splash-logo" src="/imgs/logo.png"/>
+                    </div>
+                    <div class="page-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-container" id="loading-container">
+        <div class="loading-wrapper">
+            <div class="load-progress">
+                <div id="block_1" class="barlittle"></div>
+                <div id="block_2" class="barlittle"></div>
+                <div id="block_3" class="barlittle"></div>
+                <div id="block_4" class="barlittle"></div>
+                <div id="block_5" class="barlittle"></div>
+            </div>
+            <span class="load-content">Loading</span>
+        </div>
+    </div>
+    <script>
+        document.write('<script src=' + ('__proto__' in {} ? '/scripts/libs/zepto.js' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js') + '><\/script>')
+    </script>
+    <!-- Adds the Filepicker.io javascript library to the page -->
+    <script src="https://api.filepicker.io/v1/filepicker.js"></script>
+    <script type="text/javascript">
+        //Seting up Filepicker.io with your api key
+        filepicker.setKey('A1C4f6UdTKmY8KBlbFI33z');;
+    </script>
+
+    <script>
+        window.__options__ = {fb : {connect : false }
+            , ClientToken: 'D1704404-E4DD-4D3A-9D01-12256DF4663A'
+            , $container: $("#root-container")
+            , $messagingContainer: $("#message-container")
+            , $loadingContainer: $("#loading-container")};
+        var require = {baseUrl: "/scripts/apps"};
+    </script>
+    <!-- DEBUG -->
+    <script src="/scripts/libs/JSON.js"></script>
+    <script src="/scripts/libs/store.js"></script>
+    <script src="/scripts/libs/underscore.js"></script>
+    <script src="/scripts/libs/backbone.js"></script>
+    <script src="/scripts/libs/require.js"></script>
+    <script src="/scripts/setup.js"></script>
+    <!-- LIVE
+       <script src="/scripts/libs.js"></script>
+    -->
+</body>
+</html>
